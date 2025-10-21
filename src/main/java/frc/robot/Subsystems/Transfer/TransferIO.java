@@ -1,6 +1,10 @@
 package frc.robot.Subsystems.Transfer;
 
+import org.littletonrobotics.junction.AutoLog;
+
 public interface TransferIO {
+
+    @AutoLog
 
     public static class TransferInputs {
         public double voltage;
