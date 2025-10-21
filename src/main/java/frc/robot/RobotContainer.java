@@ -17,7 +17,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Commands.TransferCommands;
 import frc.robot.POM_lib.Joysticks.PomXboxController;
+import frc.robot.Subsystems.Transfer.Transfer;
+import frc.robot.Subsystems.Transfer.TransferIO;
+import frc.robot.Subsystems.Transfer.TransferIOReal;
 
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
@@ -38,6 +42,10 @@ public class RobotContainer {
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
 
+        //Subsystems
+        Transfer transfer;
+        TransferCommands transferCommands;
+
         // Dashboard inputs
         private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -50,7 +58,7 @@ public class RobotContainer {
                 switch (Constants.currentMode) {
                         case REAL:
                                 // Real robot, instantiate hardware IO implementations
-
+                                transfer = new Transfer(new TransferIOReal());
                                 break;
 
                         case SIM:
@@ -82,6 +90,7 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
+                driverController.a().onTrue(transferCommands.intakeCoral(transfer));
 
         }
 

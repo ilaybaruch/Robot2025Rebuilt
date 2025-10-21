@@ -1,23 +1,25 @@
 package frc.robot.Subsystems.Transfer;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import frc.robot.POM_lib.Motors.POMSparkMax;
 import frc.robot.POM_lib.sensors.POMDigitalInput;
+import static frc.robot.Subsystems.Transfer.TransferConstants.*;
 
 public class TransferIOReal implements TransferIO {
 
     public POMSparkMax motor;
-    public POMDigitalInput limitSwitch;
+    public POMDigitalInput IRSensor;
 
     public TransferIOReal() {
-        motor = new POMSparkMax(0);
-        limitSwitch = new POMDigitalInput(0);
+        motor = new POMSparkMax(MOTOR_ID);
+        IRSensor = new POMDigitalInput(IR_SENSOR_CHANNEL);
     }
 
     @Override
     public void updateInputs(TransferInputs inputs) {
-
+        inputs.isCoralIn = isCoralIn();
+        inputs.voltage = motor.getBusVoltage() * motor.getAppliedOutput();
+        inputs.output = motor.getAppliedOutput();
     }
 
     @Override
@@ -37,7 +39,7 @@ public class TransferIOReal implements TransferIO {
 
     @Override
     public boolean isCoralIn() {
-        return limitSwitch.get();
+        return IRSensor.get();
     }
 
 }
