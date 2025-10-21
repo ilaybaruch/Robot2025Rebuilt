@@ -19,7 +19,7 @@ public class TransferIOReal implements TransferIO {
     public void updateInputs(TransferInputs inputs) {
         inputs.isCoralIn = isCoralIn();
         inputs.voltage = motor.getBusVoltage() * motor.getAppliedOutput();
-        inputs.output = motor.getAppliedOutput();
+        inputs.output = motor.getAppliedOutput(); // hatol
     }
 
     @Override
@@ -33,7 +33,7 @@ public class TransferIOReal implements TransferIO {
     }
 
     @Override
-    public void stopMotor() {
+    public void stopMotor() { // whaaaaaaa
         motor.stop();
     }
 

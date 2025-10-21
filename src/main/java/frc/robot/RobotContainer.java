@@ -90,7 +90,8 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
-                driverController.a().onTrue(transferCommands.intakeCoral(transfer));
+                driverController.a().onTrue(transferCommands.intakeCoral(transfer)); // vroom vroom
+                driverController.b().whileTrue(transferCommands.returnCoral(transfer));
 
         }
 

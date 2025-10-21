@@ -7,9 +7,13 @@ import frc.robot.Subsystems.Transfer.Transfer;
 import static frc.robot.Subsystems.Transfer.TransferConstants.*;
 
 public class TransferCommands {
-    public static Command intakeCoral(Transfer transfer){
+    public Command intakeCoral(Transfer transfer){
         return Commands.runEnd(()-> transfer.getIO().setVoltage(INTAKE_VOLTAGE), ()-> transfer.getIO().stopMotor(), transfer)
-        .until(()->transfer.getIO().isCoralIn());
+        .until(()->transfer.getIO().isCoralIn()); // shalom
+    }
+
+    public Command returnCoral(Transfer transfer){
+        return Commands.runEnd(()-> transfer.getIO().setVoltage(RETURN_SPEED),()-> transfer.getIO().stopMotor(), transfer);
     }
     
 }
