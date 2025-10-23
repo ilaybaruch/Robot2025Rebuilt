@@ -16,4 +16,29 @@ public interface ElevatorIO {
    public default void updateInputs(ElevatorInputs inputs) {
    }
 
+   public default boolean isPressed() {
+      return false;
+   }
+
+   public default void setVolatge(double voltage) {
+   }
+
+   public default void setSpeed(double speed) {
+   }
+
+   public default void setFF() {
+   }
+
+   public default void setPIDWithFF(double goal) {
+   }
+
+   public default void resetPID() {
+   }
+
+   public default double getPos() {
+      return 0;
+   }
+
+   public default void setPIDValues() {
+   }
 }
