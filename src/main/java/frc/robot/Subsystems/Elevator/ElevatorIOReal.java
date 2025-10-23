@@ -3,11 +3,15 @@ package frc.robot.Subsystems.Elevator;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.POM_lib.Motors.POMSparkMax;
 import frc.robot.POM_lib.sensors.POMDigitalInput;
+
+import static frc.robot.Subsystems.Elevator.ElevatorConstants.*;
 
 public class ElevatorIOReal implements ElevatorIO {
     private final POMSparkMax motor;
@@ -18,14 +22,26 @@ public class ElevatorIOReal implements ElevatorIO {
     private final ElevatorFeedforward feedforward;
 
     public ElevatorIOReal() {
-        motor = new POMSparkMax(0);
+        motor = new POMSparkMax(MOTOR_ID);
         encoder = motor.getEncoder();
         config = new SparkMaxConfig();
-        limitSwitch = new POMDigitalInput(0, false);
-        pidController = new ProfiledPIDController(0, 0, 0, null);
-        feedforward = new ElevatorFeedforward(0, 0, 0);
+        limitSwitch = new POMDigitalInput(LIMIT_SWITCH_CHANNEL, IS_SWITCH_NORMALLY_OPEN);
+        pidController = new ProfiledPIDController(Kp, Ki, Kd,
+                new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION));
+        feedforward = new ElevatorFeedforward(Ks, Kg, Kv);
 
-        // need to config
+        config.idleMode(IdleMode.kBrake).smartCurrentLimit(CURRENT_LIMIT)
+                .voltageCompensation(VOLTAGE_COMPENSATION)
+                .inverted(INVERTED);
+
+        config.encoder.positionConversionFactor(POSITION_CONVERSION_FACTOR)
+                .velocityConversionFactor(POSITION_CONVERSION_FACTOR);
+
+        encoder.setPosition(0);
+
+        pidController.setTolerance(TOLERANCE);
+
+        setPIDValues();// check
     }
 
     @Override
@@ -70,5 +86,10 @@ public class ElevatorIOReal implements ElevatorIO {
     @Override
     public double getPos() {
         return encoder.getPosition();
+    }
+
+    @Override
+    public void setPIDValues() {
+        // TODO
     }
 }

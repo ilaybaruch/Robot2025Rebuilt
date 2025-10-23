@@ -2,6 +2,8 @@ package frc.robot.Subsystems.Elevator;
 
 public class ElevatorConstants {
     public static final int MOTOR_ID = 0;
+    public static final int LIMIT_SWITCH_CHANNEL = 0;
+    public static final boolean IS_SWITCH_NORMALLY_OPEN = false; // need to check
     public static final double Kp = 0.0;
     public static final double Ki = 0.0;
     public static final double Kd = 0.0;
