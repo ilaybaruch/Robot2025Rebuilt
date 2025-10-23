@@ -4,7 +4,7 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface TransferIO {
 
-    @AutoLog // remember dis now
+    @AutoLog //I remember dis now
 
     public static class TransferInputs {
         public double voltage;
