@@ -20,6 +20,9 @@ public interface ElevatorIO {
       return false;
    }
 
+   public default void resetEncouderIfPressed() {
+   }
+
    public default void setVolatge(double voltage) {
    }
 

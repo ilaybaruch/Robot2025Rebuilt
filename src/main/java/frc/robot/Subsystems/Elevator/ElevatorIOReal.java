@@ -68,6 +68,13 @@ public class ElevatorIOReal implements ElevatorIO {
     }
 
     @Override
+    public void resetEncouderIfPressed() {
+        if (isPressed()) {
+            encoder.setPosition(0);
+        }
+    }
+
+    @Override
     public void setFF() {
         setVolatge(feedforward.calculate(0));
     }

@@ -33,6 +33,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
+
 public class RobotContainer {
 
         // Controller
@@ -82,7 +83,7 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
-
+                
         }
 
         public void displaSimFieldToAdvantageScope() {
