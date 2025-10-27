@@ -37,7 +37,6 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 
-
 public class RobotContainer {
 
         Elevator elevator;
@@ -58,7 +57,7 @@ public class RobotContainer {
                 switch (Constants.currentMode) {
                         case REAL:
                                 // Real robot, instantiate hardware IO implementations
-                                elevator  =new Elevator (new ElevatorIOReal());
+                                elevator = new Elevator(new ElevatorIOReal());
                                 elevatorCommands = new ElevatorCommands();
                                 break;
 
@@ -91,8 +90,13 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
-                driverController.rightTrigger().whileTrue(elevatorCommands.RunElevator(()->driverController.getRightTriggerAxis()*2.5, elevator));
-                driverController.leftTrigger().whileTrue(elevatorCommands.RunElevator(()->driverController.getLeftTriggerAxis()*-2, elevator));
+                driverController.rightTrigger().whileTrue(elevatorCommands
+                                .RunElevator(() -> driverController.getRightTriggerAxis() * 2.5, elevator));
+                driverController.leftTrigger().whileTrue(elevatorCommands
+                                .RunElevator(() -> driverController.getLeftTriggerAxis() * -2, elevator));
+                driverController.a().onTrue(elevatorCommands.goToPosition(10, elevator));
+                driverController.x().onTrue(elevatorCommands.goToPosition(25, elevator));
+                driverController.b().onTrue(elevatorCommands.ElevatorDown(elevator));
         }
 
         public void displaSimFieldToAdvantageScope() {

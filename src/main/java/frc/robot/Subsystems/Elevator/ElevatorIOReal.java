@@ -47,7 +47,7 @@ public class ElevatorIOReal implements ElevatorIO {
 
         pidController.setTolerance(TOLERANCE);
 
-        setPIDValues();// check
+        setPIDValues();
     }
 
     @Override
@@ -104,7 +104,6 @@ public class ElevatorIOReal implements ElevatorIO {
         pidController.reset(getPos(), encoder.getVelocity());
     }
 
-
     @Override
     public void resetPID(double newGoal) {
         if (newGoal - encoder.getPosition() > 0) {
@@ -113,8 +112,6 @@ public class ElevatorIOReal implements ElevatorIO {
             pidController.reset(encoder.getPosition(), Math.min(encoder.getVelocity(), feedforward.calculate(1)));
         }
     }
-
-
 
     @Override
     public double getPos() {
@@ -131,7 +128,8 @@ public class ElevatorIOReal implements ElevatorIO {
         pidController.setP(elevatorTuning.getKp());
         pidController.setI(elevatorTuning.getKi());
         pidController.setD(elevatorTuning.getKd());
-        pidController.setConstraints(new TrapezoidProfile.Constraints(elevatorTuning.getMaxVelocity(), elevatorTuning.getMaxAcceleration()));
+        pidController.setConstraints(
+                new TrapezoidProfile.Constraints(elevatorTuning.getMaxVelocity(), elevatorTuning.getMaxAcceleration()));
         feedforward.setKg(elevatorTuning.getKg());
         feedforward.setKv(elevatorTuning.getKv());
         feedforward.setKa(elevatorTuning.getKg());

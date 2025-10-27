@@ -14,13 +14,6 @@ public class Elevator extends SubsystemBase {
     ElevatorCommands elevatorCommands = new ElevatorCommands();
 
     public Elevator(ElevatorIO elevatorIO) {
-        //// setDefaultCommand(elevatorCommands.RunElevatorFF(new Elevator(new ElevatorIOReal())));
-        // setDefaultCommand(new RepeatCommand(
-        //     new ConditionalCommand(
-        //         this.runOnce(()-> elevatorIO.setVolatge(0)),
-        //         this.runOnce(()->elevatorIO.resistGravity()), 
-        //      () -> elevatorIO.isPressed())
-        // )); 
         setDefaultCommand(new RepeatCommand(new ConditionalCommand(this.runOnce(() -> elevatorIO.setVolatge(0)),
                 this.runOnce(elevatorIO::resistGravity), elevatorIO::isPressed))
                 .beforeStarting(new PrintCommand("Elevator default command")));
@@ -28,7 +21,7 @@ public class Elevator extends SubsystemBase {
         this.elevatorIO = elevatorIO;
     }
 
-    public ElevatorIO getIO(){
+    public ElevatorIO getIO() {
         return elevatorIO;
     }
 
