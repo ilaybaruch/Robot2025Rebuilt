@@ -27,7 +27,7 @@ public class ArmConstants {
     public static final double L2_POS = 0;
     public static final double L3_POS = 0;
     public static final double L4_POS = 0;
-    public static final double UP_POS = 0;
+    public static final double OPEN_POS = Math.PI/2;
     public static final double CORAL_KG = 0;
 
 }

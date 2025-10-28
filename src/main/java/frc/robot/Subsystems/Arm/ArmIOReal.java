@@ -89,11 +89,11 @@ public class ArmIOReal implements ArmIO {
     @Override
     public void resetIfPressed() {
         if (upSwitchPressed()) {
-            encoder.setPosition(UP_POS);
+            encoder.setPosition(OPEN_POS);
         }
 
         if (downSwitchPressed()) {
-            encoder.setPosition(0);
+            encoder.setPosition(Math.PI/-2);
         }
 
     }
