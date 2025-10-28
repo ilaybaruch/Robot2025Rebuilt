@@ -3,11 +3,11 @@ package frc.robot.Subsystems.Elevator;
 public class ElevatorConstants {
     public static final int MOTOR_ID = 16;
     public static final int LIMIT_SWITCH_CHANNEL = 3;
-    public static final boolean IS_SWITCH_NORMALLY_OPEN = false; // need to check
-    public static final double Kp = 0.0;
+    public static final boolean IS_SWITCH_NORMALLY_OPEN = true;
+    public static final double Kp = 2.2;
     public static final double Ki = 0.0;
     public static final double Kd = 0.0;
-    public static final double Ks = 0.0;
+    public static final double Ks = 0.7;
     public static final double Kg = 0.5;
     public static final double Kv = 0.0;
     public static final double Ka = 0.0;
@@ -17,9 +17,9 @@ public class ElevatorConstants {
     public static final double VOLTAGE_COMPENSATION = 12;
     public static final double POSITION_CONVERSION_FACTOR = 1;
     public static final boolean INVERTED = true;// idk
-    public static final double MAX_ACCELERATION = 10;
-    public static final double MAX_VELOCITY = 10;
-    public static final double TOLERANCE = 0.2;
+    public static final double MAX_ACCELERATION = 110;
+    public static final double MAX_VELOCITY = 50;
+    public static final double TOLERANCE = 0.15;
     public static final double INTAKE_POS = 0.0;
     public static final double L1_POS = 0.0;
     public static final double L2_POS = 0.0;

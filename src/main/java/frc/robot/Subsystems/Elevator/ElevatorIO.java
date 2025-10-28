@@ -10,6 +10,7 @@ public interface ElevatorIO {
       public double voltage;
       public double output;
       public double position;
+      public double velocity;
       public boolean isSwitchPressed;
       public boolean atGoal;
    }

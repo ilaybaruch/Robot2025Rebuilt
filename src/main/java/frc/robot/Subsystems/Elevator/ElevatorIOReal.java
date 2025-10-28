@@ -55,9 +55,10 @@ public class ElevatorIOReal implements ElevatorIO {
         inputs.voltage = motor.getBusVoltage() * motor.getAppliedOutput();
         inputs.output = motor.getAppliedOutput();
         inputs.atGoal = pidController.atGoal();
+        inputs.velocity = encoder.getVelocity();
         inputs.isSwitchPressed = limitSwitch.get();
         inputs.position = encoder.getPosition();
-
+        setPIDValues();
         resetEncouderIfPressed();
     }
 
@@ -73,7 +74,7 @@ public class ElevatorIOReal implements ElevatorIO {
 
     @Override
     public boolean isPressed() {
-        return !(limitSwitch.get());
+        return limitSwitch.get();
     }
 
     @Override
