@@ -28,10 +28,10 @@ public class ArmIOReal implements ArmIO {
 
     public ArmIOReal() {
         motor = new POMSparkMax(MOTOR_ID);
+        encoder = motor.getEncoder();
         config = new SparkMaxConfig();
         upLimitSwitch = new POMDigitalInput(UP_LIMIT_SWITCH_CHANNEL, UP_SWITCH_NORMALLY_OPEN);
         downLimitSwitch = new POMDigitalInput(DOWN_LIMIT_SWITCH_CHANNEL, DOWN_SWITCH_NORMALLY_OPEN);
-        encoder = motor.getEncoder();
         pidController = new ProfiledPIDController(Kp, Ki, Kd,
                 new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION));
         feedforward = new ArmFeedforward(Ks, Kg, Kv);
@@ -40,7 +40,7 @@ public class ArmIOReal implements ArmIO {
         config.idleMode(IdleMode.kBrake).inverted(INVERTED).smartCurrentLimit(CURRENT_LIMIT)
                 .voltageCompensation(VOLTAGE_COMPENSATION);
 
-        config.encoder.positionConversionFactor(POSITION_CONVERSION_FACTOR)
+        config.encoder.positionConversionFactor(POSITION_CONVERSION_FACTOR)//FIXME POSITION_CONVERSION_FACTOR worng                  
                 .velocityConversionFactor(POSITION_CONVERSION_FACTOR / 60);
 
         motor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
