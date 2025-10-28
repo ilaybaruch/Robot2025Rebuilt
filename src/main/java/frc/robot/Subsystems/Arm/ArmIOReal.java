@@ -2,7 +2,11 @@ package frc.robot.Subsystems.Arm;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -24,6 +28,7 @@ public class ArmIOReal implements ArmIO {
 
     public ArmIOReal() {
         motor = new POMSparkMax(MOTOR_ID);
+        config = new SparkMaxConfig();
         upLimitSwitch = new POMDigitalInput(UP_LIMIT_SWITCH_CHANNEL, UP_SWITCH_NORMALLY_OPEN);
         downLimitSwitch = new POMDigitalInput(DOWN_LIMIT_SWITCH_CHANNEL, DOWN_SWITCH_NORMALLY_OPEN);
         encoder = motor.getEncoder();
@@ -32,7 +37,17 @@ public class ArmIOReal implements ArmIO {
         feedforward = new ArmFeedforward(Ks, Kg, Kv);
         tuning = new ArmTuning();
 
-        // need to config
+        config.idleMode(IdleMode.kBrake).inverted(INVERTED).smartCurrentLimit(CURRENT_LIMIT)
+                .voltageCompensation(VOLTAGE_COMPENSATION);
+
+        config.encoder.positionConversionFactor(POSITION_CONVERSION_FACTOR)
+                .velocityConversionFactor(POSITION_CONVERSION_FACTOR / 60);
+
+        motor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+
+        encoder.setPosition(0);
+
+        pidController.setTolerance(TOLERANCE);
     }
 
     @Override

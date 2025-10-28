@@ -22,7 +22,7 @@ public class ArmConstants {
     public static final boolean INVERTED = true; // need to check if true
     public static final double MAX_ACCELERATION = 80;
     public static final double MAX_VELOCITY = 50;
-    public static final double TOLERANCE = 0;
+    public static final double TOLERANCE = 0.5;
     public static final double L1_POS = 0;
     public static final double L2_POS = 0;
     public static final double L3_POS = 0;
