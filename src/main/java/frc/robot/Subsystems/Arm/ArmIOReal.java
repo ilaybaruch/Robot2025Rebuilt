@@ -31,6 +31,8 @@ public class ArmIOReal implements ArmIO {
                 new TrapezoidProfile.Constraints(MAX_VELOCITY, MAX_ACCELERATION));
         feedforward = new ArmFeedforward(Ks, Kg, Kv);
         tuning = new ArmTuning();
+
+        // need to config
     }
 
     @Override
@@ -40,7 +42,7 @@ public class ArmIOReal implements ArmIO {
         inputs.position = encoder.getPosition();
         inputs.upLimitSwitchPressed = upSwitchPressed();
         inputs.downLimitSwitchPressed = downSwitchPressed();
-
+        setPIDValues();
         resetIfPressed();
     }
 
