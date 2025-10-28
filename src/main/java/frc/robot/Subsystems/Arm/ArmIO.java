@@ -15,6 +15,9 @@ public interface ArmIO {
         public boolean atGoal;
     }
 
+    public default void updateInputs(ArmInputs inputs) {
+    }
+
     public default void setSpeed(double speed) {
     }
 
@@ -39,6 +42,10 @@ public interface ArmIO {
 
     public default boolean downSwitchPressed() {
         return false;
+    }
+
+    public default void resetIfPressed() {
+
     }
 
     public default boolean atGoal() {
