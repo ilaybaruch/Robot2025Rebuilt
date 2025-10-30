@@ -10,6 +10,7 @@ public interface ArmIO {
         public double voltage;
         public double output;
         public double position;
+        public double velocity;
         public boolean downLimitSwitchPressed;
         public boolean upLimitSwitchPressed;
         public boolean atGoal;
@@ -27,13 +28,7 @@ public interface ArmIO {
     public default void resistGravity() {
     }
 
-    public default void stopElevator() {
-    }
-
-    public default void brakeElevator() {
-    }
-
-    public default void goToPostion(double goal) {
+    public default void setGoal(double goal) {
     }
 
     public default boolean upSwitchPressed() {
@@ -64,4 +59,6 @@ public interface ArmIO {
 
     public default void setPIDValues() {
     }
+
+    public default void addKg(double KG){}
 }

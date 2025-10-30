@@ -55,8 +55,10 @@ public class ArmIOReal implements ArmIO {
         inputs.voltage = motor.getAppliedOutput() * motor.getAppliedOutput();
         inputs.output = motor.getAppliedOutput();
         inputs.position = encoder.getPosition();
+        inputs.velocity = encoder.getVelocity();
         inputs.upLimitSwitchPressed = upSwitchPressed();
         inputs.downLimitSwitchPressed = downSwitchPressed();
+        inputs.atGoal = atGoal();
         setPIDValues();
         resetIfPressed();
     }
@@ -69,11 +71,6 @@ public class ArmIOReal implements ArmIO {
     @Override
     public void setVoltage(double voltage) {
         motor.setVoltage(voltage);
-    }
-
-    @Override
-    public void brakeElevator() {
-        motor.stop();
     }
 
     @Override
@@ -93,7 +90,7 @@ public class ArmIOReal implements ArmIO {
         }
 
         if (downSwitchPressed()) {
-            encoder.setPosition(Math.PI/-2);
+            encoder.setPosition(CLOSE_POS);
         }
 
     }
@@ -110,7 +107,7 @@ public class ArmIOReal implements ArmIO {
 
     @Override
     public void resetPID() {
-        pidController.reset(getPos());
+        pidController.reset(getPos(),encoder.getVelocity());
     }
 
     @Override
@@ -124,10 +121,6 @@ public class ArmIOReal implements ArmIO {
         }
     }
 
-    @Override
-    public void stopElevator() {
-        motor.setVoltage(feedforward.calculate(getPos(), 0));
-    }
 
     @Override
     public void resistGravity() {
@@ -135,7 +128,7 @@ public class ArmIOReal implements ArmIO {
     }
 
     @Override
-    public void goToPostion(double goal) {
+    public void setGoal(double goal) {
         motor.setVoltage(pidController.calculate(getPos(), goal) +
                 feedforward.calculate(getPos(), pidController.getSetpoint().velocity));
     }
@@ -149,6 +142,11 @@ public class ArmIOReal implements ArmIO {
                 new TrapezoidProfile.Constraints(tuning.getMaxVelocity(), tuning.getMaxAcceleration()));
         feedforward = new ArmFeedforward(tuning.getKs(), tuning.getKg(), tuning.getKv(),
                 tuning.getKa());
+    }
+
+    @Override
+    public void addKg(double KG) {
+        feedforward.setKg(KG + Kg);
     }
 
 }

@@ -17,7 +17,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Commands.ArmCommands;
 import frc.robot.POM_lib.Joysticks.PomXboxController;
+import frc.robot.Subsystems.Arm.Arm;
+import frc.robot.Subsystems.Arm.ArmIOReal;
+import static frc.robot.Subsystems.Arm.ArmConstants.*;
 
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
@@ -35,6 +39,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
 
+        Arm arm;
+        ArmCommands armCommands;
+
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
 
@@ -50,7 +57,8 @@ public class RobotContainer {
                 switch (Constants.currentMode) {
                         case REAL:
                                 // Real robot, instantiate hardware IO implementations
-
+                                arm = new Arm(new ArmIOReal());
+                                armCommands = new ArmCommands();
                                 break;
 
                         case SIM:
@@ -82,6 +90,11 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
+                driverController.a().onTrue(armCommands.ArmGoToPoistion(0, arm));
+                driverController.x().onTrue(armCommands.ArmGoToPoistion(OPEN_POS, arm));
+                driverController.b().onTrue(armCommands.ArmGoToStart(arm));
+                driverController.rightTrigger().whileTrue(armCommands.RunArm(1, arm));
+                driverController.leftTrigger().whileTrue(armCommands.RunArm( -0.5, arm));
 
         }
 
