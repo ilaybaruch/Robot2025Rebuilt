@@ -21,7 +21,9 @@ public class ElevatorConstants {
     public static final double MAX_VELOCITY = 50;
     public static final double TOLERANCE = 0.15;
     public static final double ELEVATOR_INTAKE_POS = 2.26;
-    public static final double L1_POS = 0.0;
-    public static final double L2_POS = 0.0;
-    public static final double MAX_POS = 0.0;
+    public static final double ELEVATOR_L1_POS = 16.7;
+    public static final double ELEVATOR_L2_POS = 19.0;
+    public static final double ELEVATOR_L3_POS = 0.80;
+    public static final double ELEVATOR_L4_POS = 33.25;
+    public static final double ELEVATOR_MAX_POS = 0.0;
 }

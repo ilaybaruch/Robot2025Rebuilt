@@ -112,14 +112,17 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
-                driverController.rightTrigger().whileTrue(elevatorCommands
-                                .RunElevator(() -> driverController.getRightTriggerAxis() * 2.5, elevator));
-                driverController.leftTrigger().whileTrue(elevatorCommands
-                                .RunElevator(() -> driverController.getLeftTriggerAxis() * -2, elevator));
-                driverController.a().onTrue(elevatorCommands.goToPosition(10, elevator));
-                driverController.x().onTrue(elevatorCommands.goToPosition(25, elevator));
-                driverController.b().onTrue(elevatorCommands.ElevatorDown(elevator)); 
-                driverController.LB().onTrue(multiSystemCommads.intakeCoral(elevator, arm, transfer));
+                driverController.a().onTrue(multiSystemCommads.intakeCoral(elevator, arm, transfer));
+                driverController.b().onTrue(multiSystemCommads.CloseAll(elevator, arm));
+                driverController.PovUp().onTrue(multiSystemCommads.L4(elevator, arm));
+                driverController.PovRight().onTrue(multiSystemCommads.L2(elevator, arm));
+                driverController.PovLeft().onTrue(multiSystemCommads.L3(elevator, arm));
+                driverController.PovDown().onTrue(multiSystemCommads.L1(elevator, arm));
+
+                driverController.rightTrigger().whileTrue(elevatorCommands.RunElevator(()->driverController.getRightTriggerAxis() * 1.5, elevator));
+                driverController.leftTrigger().whileTrue(elevatorCommands.RunElevator(()->driverController.getLeftTriggerAxis() * -1.5, elevator));
+                driverController.RB().whileTrue(armCommands.RunArm(1, arm));
+                driverController.LB().whileTrue(armCommands.RunArm(-1, arm));
         }
 
         public void displaSimFieldToAdvantageScope() {
