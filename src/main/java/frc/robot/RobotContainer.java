@@ -118,7 +118,7 @@ public class RobotContainer {
                                 .RunElevator(() -> driverController.getLeftTriggerAxis() * -2, elevator));
                 driverController.a().onTrue(elevatorCommands.goToPosition(10, elevator));
                 driverController.x().onTrue(elevatorCommands.goToPosition(25, elevator));
-                driverController.b().onTrue(elevatorCommands.ElevatorDown(elevator));
+                driverController.b().onTrue(elevatorCommands.ElevatorDown(elevator)); 
                 driverController.LB().onTrue(multiSystemCommads.intakeCoral(elevator, arm, transfer));
         }
 

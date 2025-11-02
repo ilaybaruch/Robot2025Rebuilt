@@ -33,5 +33,9 @@ public class MultiSystemCommads extends Command {
 
         ()->transfer.getIO().isCoralIn(), elevator, arm, transfer);
     }
+
+    public Command intakeCoral(Elevator elevator,Arm arm, Transfer transfer){
+        return 
+    }
     
 }
