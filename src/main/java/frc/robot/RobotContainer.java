@@ -21,6 +21,11 @@ import frc.robot.Commands.ElevatorCommands;
 import frc.robot.POM_lib.Joysticks.PomXboxController;
 import frc.robot.Subsystems.Elevator.Elevator;
 import frc.robot.Subsystems.Elevator.ElevatorIOReal;
+import frc.robot.Commands.ArmCommands;
+import frc.robot.POM_lib.Joysticks.PomXboxController;
+import frc.robot.Subsystems.Arm.Arm;
+import frc.robot.Subsystems.Arm.ArmIOReal;
+import static frc.robot.Subsystems.Arm.ArmConstants.*;
 
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
@@ -41,6 +46,8 @@ public class RobotContainer {
 
         Elevator elevator;
         ElevatorCommands elevatorCommands;
+        Arm arm;
+        ArmCommands armCommands;
 
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
@@ -59,6 +66,8 @@ public class RobotContainer {
                                 // Real robot, instantiate hardware IO implementations
                                 elevator = new Elevator(new ElevatorIOReal());
                                 elevatorCommands = new ElevatorCommands();
+                                arm = new Arm(new ArmIOReal());
+                                armCommands = new ArmCommands();
                                 break;
 
                         case SIM:
