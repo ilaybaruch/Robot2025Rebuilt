@@ -13,7 +13,7 @@ public class ArmConstants {
     public static final double Ki = 0.0;
     public static final double Kd = 0.0;
     public static final double Ks = 0.0;
-    public static final double Kg = 0.5;
+    public static final double Kg = 0.45;
     public static final double Kv = 0.0;
     public static final double Ka = 0.0;
     public static final double MOTOR_MAX_VOLTAGE = 12;
@@ -29,7 +29,7 @@ public class ArmConstants {
     public static final double L2_POS = 0;
     public static final double L3_POS = 0;
     public static final double L4_POS = 0;
-    public static final double OPEN_POS = Math.PI/2.09; //2.13
+    public static final double OPEN_POS = Math.PI/2.0; //2.13
     public static final double CLOSE_POS = Math.PI/-2;//-1.96
     public static final double CORAL_KG = 0;
 
