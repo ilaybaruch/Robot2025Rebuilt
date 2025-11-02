@@ -9,7 +9,7 @@ public class ArmConstants {
     public static final int DOWN_LIMIT_SWITCH_CHANNEL = 2;
     public static final boolean UP_SWITCH_NORMALLY_OPEN = true;// need to check
     public static final boolean DOWN_SWITCH_NORMALLY_OPEN = true;// need to check
-    public static final double Kp = 0.0;
+    public static final double Kp = 2.7; // idk amen
     public static final double Ki = 0.0;
     public static final double Kd = 0.0;
     public static final double Ks = 0.0;
