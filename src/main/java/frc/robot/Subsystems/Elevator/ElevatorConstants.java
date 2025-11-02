@@ -20,7 +20,7 @@ public class ElevatorConstants {
     public static final double MAX_ACCELERATION = 110;
     public static final double MAX_VELOCITY = 50;
     public static final double TOLERANCE = 0.15;
-    public static final double INTAKE_POS = 0.0;
+    public static final double ELEVATOR_INTAKE_POS = 2.26;
     public static final double L1_POS = 0.0;
     public static final double L2_POS = 0.0;
     public static final double MAX_POS = 0.0;

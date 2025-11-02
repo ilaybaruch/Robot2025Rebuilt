@@ -22,15 +22,15 @@ public class ArmConstants {
     public static final double VOLTAGE_COMPENSATION = 12;
     public static final double POSITION_CONVERSION_FACTOR = 1.0 / 40 /* gears */ * (2 * Math.PI)/* rads */;
     public static final boolean INVERTED = true; // need to check if true
-    public static final double MAX_ACCELERATION = 10;
-    public static final double MAX_VELOCITY = 10;
+    public static final double MAX_ACCELERATION = 20;
+    public static final double MAX_VELOCITY = 3;
     public static final double TOLERANCE = Units.degreesToRadians(3.0);
     public static final double L1_POS = 0;
     public static final double L2_POS = 0;
     public static final double L3_POS = 0;
     public static final double L4_POS = 0;
-    public static final double OPEN_POS = Math.PI/2.0; //2.13
-    public static final double CLOSE_POS = Math.PI/-2;//-1.96
+    public static final double ARM_OPEN_POS = Math.PI/2.0; //2.13
+    public static final double ARM_CLOSE_POS = Math.PI/-2;//-1.96
     public static final double CORAL_KG = 0;
 
 }

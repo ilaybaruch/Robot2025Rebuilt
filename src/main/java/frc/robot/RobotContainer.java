@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.ElevatorCommands;
+import frc.robot.Commands.MultiSystemCommads;
 import frc.robot.POM_lib.Joysticks.PomXboxController;
 import frc.robot.Subsystems.Elevator.Elevator;
 import frc.robot.Subsystems.Elevator.ElevatorIOReal;
@@ -53,6 +54,7 @@ public class RobotContainer {
         ElevatorCommands elevatorCommands;
         Arm arm;
         ArmCommands armCommands;
+        MultiSystemCommads multiSystemCommads;
 
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
@@ -78,6 +80,7 @@ public class RobotContainer {
                                 arm = new Arm(new ArmIOReal());
                                 armCommands = new ArmCommands();
                                 transfer = new Transfer(new TransferIOReal());
+                                multiSystemCommads = new MultiSystemCommads();
                                 break;
 
                         case SIM:
@@ -116,6 +119,7 @@ public class RobotContainer {
                 driverController.a().onTrue(elevatorCommands.goToPosition(10, elevator));
                 driverController.x().onTrue(elevatorCommands.goToPosition(25, elevator));
                 driverController.b().onTrue(elevatorCommands.ElevatorDown(elevator));
+                driverController.LB().onTrue(multiSystemCommads.intakeCoral(elevator, arm, transfer));
         }
 
         public void displaSimFieldToAdvantageScope() {

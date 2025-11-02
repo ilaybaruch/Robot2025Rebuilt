@@ -37,7 +37,7 @@ public class ElevatorCommands extends Command {
                     elevator.getIO().stopElevator();
                 },
                 () -> elevator.getIO().atGoal(),
-                elevator).withName("elevator down").andThen(() -> elevator.getIO().setVolatge(-0.3))
+                elevator).withName("elevator down").andThen(() -> elevator.getIO().setSpeed(-0.15))
                 .until(() -> elevator.getIO().isPressed());
     }
 
