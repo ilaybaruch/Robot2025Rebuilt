@@ -13,7 +13,7 @@ public class ArmConstants {
     public static final double Ki = 0.0;
     public static final double Kd = 0.0;
     public static final double Ks = 0.0;
-    public static final double Kg = 0.45;
+    public static final double Kg = 0.48;
     public static final double Kv = 0.0;
     public static final double Ka = 0.0;
     public static final double MOTOR_MAX_VOLTAGE = 12;

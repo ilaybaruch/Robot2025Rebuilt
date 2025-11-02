@@ -119,10 +119,10 @@ public class RobotContainer {
                 driverController.PovLeft().onTrue(multiSystemCommads.L3(elevator, arm));
                 driverController.PovDown().onTrue(multiSystemCommads.L1(elevator, arm));
 
-                driverController.rightTrigger().whileTrue(elevatorCommands.RunElevator(()->driverController.getRightTriggerAxis() * 1.5, elevator));
-                driverController.leftTrigger().whileTrue(elevatorCommands.RunElevator(()->driverController.getLeftTriggerAxis() * -1.5, elevator));
-                driverController.RB().whileTrue(armCommands.RunArm(1, arm));
-                driverController.LB().whileTrue(armCommands.RunArm(-1, arm));
+                driverController.rightTrigger().whileTrue(elevatorCommands.setVoltage(()->driverController.getRightTriggerAxis() * 1.5, elevator));
+                driverController.leftTrigger().whileTrue(elevatorCommands.setVoltage(()->driverController.getLeftTriggerAxis() * -1.5, elevator));
+                driverController.RB().whileTrue(armCommands.setVoltage(1, arm));
+                driverController.LB().whileTrue(armCommands.setVoltage(-1, arm));
         }
 
         public void displaSimFieldToAdvantageScope() {
