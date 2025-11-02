@@ -26,6 +26,11 @@ import frc.robot.POM_lib.Joysticks.PomXboxController;
 import frc.robot.Subsystems.Arm.Arm;
 import frc.robot.Subsystems.Arm.ArmIOReal;
 import static frc.robot.Subsystems.Arm.ArmConstants.*;
+import frc.robot.Commands.TransferCommands;
+import frc.robot.POM_lib.Joysticks.PomXboxController;
+import frc.robot.Subsystems.Transfer.Transfer;
+import frc.robot.Subsystems.Transfer.TransferIO;
+import frc.robot.Subsystems.Transfer.TransferIOReal;
 
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
@@ -52,6 +57,10 @@ public class RobotContainer {
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
 
+        //Subsystems
+        Transfer transfer;
+        TransferCommands transferCommands;
+
         // Dashboard inputs
         private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -68,6 +77,7 @@ public class RobotContainer {
                                 elevatorCommands = new ElevatorCommands();
                                 arm = new Arm(new ArmIOReal());
                                 armCommands = new ArmCommands();
+                                transfer = new Transfer(new TransferIOReal());
                                 break;
 
                         case SIM:
