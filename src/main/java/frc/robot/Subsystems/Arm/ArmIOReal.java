@@ -40,7 +40,7 @@ public class ArmIOReal implements ArmIO {
         config.idleMode(IdleMode.kBrake).inverted(INVERTED).smartCurrentLimit(CURRENT_LIMIT)
                 .voltageCompensation(VOLTAGE_COMPENSATION);
 
-        config.encoder.positionConversionFactor(POSITION_CONVERSION_FACTOR)//FIXME POSITION_CONVERSION_FACTOR worng                  
+        config.encoder.positionConversionFactor(POSITION_CONVERSION_FACTOR)
                 .velocityConversionFactor(POSITION_CONVERSION_FACTOR / 60);
 
         motor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
@@ -107,7 +107,7 @@ public class ArmIOReal implements ArmIO {
 
     @Override
     public void resetPID() {
-        pidController.reset(getPos(),encoder.getVelocity());
+        pidController.reset(getPos(), encoder.getVelocity());
     }
 
     @Override
@@ -120,7 +120,6 @@ public class ArmIOReal implements ArmIO {
                     Math.min(encoder.getVelocity(), feedforward.calculate(getPos(), 1)));
         }
     }
-
 
     @Override
     public void resistGravity() {
