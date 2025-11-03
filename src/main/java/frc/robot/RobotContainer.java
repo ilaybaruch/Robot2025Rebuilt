@@ -59,7 +59,7 @@ public class RobotContainer {
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
 
-        //Subsystems
+        // Subsystems
         Transfer transfer;
         TransferCommands transferCommands;
 
@@ -119,10 +119,13 @@ public class RobotContainer {
                 driverController.PovLeft().onTrue(multiSystemCommads.L3(elevator, arm));
                 driverController.PovDown().onTrue(multiSystemCommads.L1(elevator, arm));
 
-                driverController.rightTrigger().whileTrue(elevatorCommands.setVoltage(()->driverController.getRightTriggerAxis() * 1.5, elevator));
-                driverController.leftTrigger().whileTrue(elevatorCommands.setVoltage(()->driverController.getLeftTriggerAxis() * -1.5, elevator));
+                driverController.rightTrigger().whileTrue(elevatorCommands
+                                .setVoltage(() -> driverController.getRightTriggerAxis() * 1.5, elevator));
+                driverController.leftTrigger().whileTrue(elevatorCommands
+                                .setVoltage(() -> driverController.getLeftTriggerAxis() * -1.5, elevator));
                 driverController.RB().whileTrue(armCommands.setVoltage(1, arm));
                 driverController.LB().whileTrue(armCommands.setVoltage(-1, arm));
+                driverController.start().onTrue(armCommands.closeArm(arm));
         }
 
         public void displaSimFieldToAdvantageScope() {
