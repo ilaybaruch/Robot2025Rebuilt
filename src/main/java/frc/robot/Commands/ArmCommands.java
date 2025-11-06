@@ -10,8 +10,8 @@ public class ArmCommands extends Command {
 
     public Command setVoltage(double voltage, Arm arm) {
         return Commands.runEnd(
-        () -> arm.getIO().setVoltage(voltage),
-        () -> arm.getIO().resistGravity(), arm);
+                () -> arm.getIO().setVoltage(voltage),
+                () -> arm.getIO().resistGravity(), arm);
     }
 
     public Command goToPositon(double goal, Arm arm) {
@@ -19,15 +19,15 @@ public class ArmCommands extends Command {
             arm.getIO().resistGravity();
             arm.getIO().resetPID(goal);
         },
-        () -> arm.getIO().setGoal(goal),
-         interrupted -> arm.getIO().resistGravity(),
-        () -> arm.getIO().atGoal(), arm);
+                () -> arm.getIO().setGoal(goal),
+                interrupted -> arm.getIO().resistGravity(),
+                () -> arm.getIO().atGoal(), arm);
     }
 
-    public Command closeArm(Arm arm){
+    public Command closeArm(Arm arm) {
         return Commands.sequence(
-        goToPositon(ARM_CLOSE_POS, arm),
-        setVoltage(-1, arm).until(arm.getIO()::downSwitchPressed));
+                goToPositon(ARM_CLOSE_POS, arm),
+                setVoltage(-1, arm).until(arm.getIO()::downSwitchPressed));
     }
 
 }

@@ -29,7 +29,7 @@ public class ArmConstants {
     public static final double ARM_L2_POS = -1.2;
     public static final double ARM_L3_POS = 1.1;
     public static final double ARM_L4_POS = 1.28;
-    public static final double ARM_OPEN_POS = Math.PI / 2.09; // 2.13
+    public static final double ARM_OPEN_POS = Math.PI / 2.0; // 2.13 / 2.09
     public static final double ARM_CLOSE_POS = Math.PI / -2;// -1.96
     public static final double CORAL_KG = 0;
 
