@@ -17,11 +17,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Commands.TransferCommands;
 import frc.robot.POM_lib.Joysticks.PomXboxController;
-import frc.robot.Subsystems.Transfer.Transfer;
-import frc.robot.Subsystems.Transfer.TransferIO;
-import frc.robot.Subsystems.Transfer.TransferIOReal;
 
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
@@ -37,12 +33,16 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
+
 public class RobotContainer {
+
+        Elevator elevator;
+        ElevatorCommands elevatorCommands;
 
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
 
-        //Subsystems
+        // Subsystems
         Transfer transfer;
         TransferCommands transferCommands;
 
@@ -58,7 +58,7 @@ public class RobotContainer {
                 switch (Constants.currentMode) {
                         case REAL:
                                 // Real robot, instantiate hardware IO implementations
-                                transfer = new Transfer(new TransferIOReal());
+
                                 break;
 
                         case SIM:
@@ -90,8 +90,6 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
-                driverController.a().onTrue(transferCommands.intakeCoral(transfer)); // vroom vroom
-                driverController.b().whileTrue(transferCommands.returnCoral(transfer));
 
         }
 
