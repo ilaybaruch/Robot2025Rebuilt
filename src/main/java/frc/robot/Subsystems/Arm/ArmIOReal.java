@@ -134,13 +134,15 @@ public class ArmIOReal implements ArmIO {
 
     @Override
     public void setPIDValues() {
-        pidController.setP(tuning.getKp());
-        pidController.setI(tuning.getKi());
-        pidController.setD(tuning.getKd());
-        pidController.setConstraints(
-                new TrapezoidProfile.Constraints(tuning.getMaxVelocity(), tuning.getMaxAcceleration()));
-        feedforward = new ArmFeedforward(tuning.getKs(), tuning.getKg(), tuning.getKv(),
-                tuning.getKa());
+        // pidController.setP(tuning.getKp());
+        // pidController.setI(tuning.getKi());
+        // pidController.setD(tuning.getKd());
+        // pidController.setConstraints(
+        // new TrapezoidProfile.Constraints(tuning.getMaxVelocity(),
+        // tuning.getMaxAcceleration()));
+        // feedforward = new ArmFeedforward(tuning.getKs(), tuning.getKg(),
+        // tuning.getKv(),
+        // tuning.getKa());
     }
 
     @Override

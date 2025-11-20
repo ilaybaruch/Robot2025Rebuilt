@@ -99,13 +99,13 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
-                driverController.rightTrigger().whileTrue(elevatorCommands
-                                .RunElevator(() -> driverController.getRightTriggerAxis() * 2.5, elevator));
-                driverController.leftTrigger().whileTrue(elevatorCommands
-                                .RunElevator(() -> driverController.getLeftTriggerAxis() * -2, elevator));
-                driverController.a().onTrue(elevatorCommands.goToPosition(10, elevator));
-                driverController.x().onTrue(elevatorCommands.goToPosition(25, elevator));
-                driverController.b().onTrue(elevatorCommands.ElevatorDown(elevator));
+                // driverController.rightTrigger().whileTrue(elevatorCommands
+                // .RunElevator(() -> driverController.getRightTriggerAxis() * 2.5, elevator));
+                // driverController.leftTrigger().whileTrue(elevatorCommands
+                // .RunElevator(() -> driverController.getLeftTriggerAxis() * -2, elevator));
+                // driverController.a().onTrue(elevatorCommands.goToPosition(10, elevator));
+                // driverController.x().onTrue(elevatorCommands.goToPosition(25, elevator));
+                // driverController.b().onTrue(elevatorCommands.ElevatorDown(elevator));
                 driverController.a().onTrue(armCommands.ArmGoToPoistion(0, arm));
                 driverController.x().onTrue(armCommands.ArmGoToPoistion(OPEN_POS, arm));
                 driverController.b().onTrue(armCommands.ArmGoToStart(arm));
