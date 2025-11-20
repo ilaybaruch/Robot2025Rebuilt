@@ -18,10 +18,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Commands.ElevatorCommands;
+import frc.robot.Commands.MultiSystemCommands;
+import frc.robot.Commands.TransferCommands;
 import frc.robot.Commands.ArmCommands;
 import frc.robot.POM_lib.Joysticks.PomXboxController;
 import frc.robot.Subsystems.Elevator.Elevator;
 import frc.robot.Subsystems.Elevator.ElevatorIOReal;
+import frc.robot.Subsystems.Transfer.Transfer;
+import frc.robot.Subsystems.Transfer.TransferIOReal;
 import frc.robot.Subsystems.Arm.Arm;
 import frc.robot.Subsystems.Arm.ArmIOReal;
 import static frc.robot.Subsystems.Arm.ArmConstants.*;
@@ -49,6 +53,11 @@ public class RobotContainer {
         Arm arm;
         ArmCommands armCommands;
 
+        Transfer transfer;
+        TransferCommands transferCommands;
+
+        MultiSystemCommands multiSystemCommands;
+
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
 
@@ -68,6 +77,9 @@ public class RobotContainer {
                                 elevatorCommands = new ElevatorCommands();
                                 arm = new Arm(new ArmIOReal());
                                 armCommands = new ArmCommands();
+                                transfer = new Transfer(new TransferIOReal());
+                                transferCommands = new TransferCommands();
+                                multiSystemCommands = new MultiSystemCommands();
                                 break;
 
                         case SIM:
@@ -109,8 +121,9 @@ public class RobotContainer {
                 driverController.a().onTrue(armCommands.ArmGoToPoistion(0, arm));
                 driverController.x().onTrue(armCommands.ArmGoToPoistion(OPEN_POS, arm));
                 driverController.b().onTrue(armCommands.ArmGoToStart(arm));
-                driverController.rightTrigger().whileTrue(armCommands.RunArm(1, arm));
-                driverController.leftTrigger().whileTrue(armCommands.RunArm(-0.5, arm));
+                driverController.rightTrigger().whileTrue(armCommands.setVoltage(1, arm));
+                driverController.leftTrigger().whileTrue(armCommands.setVoltage(-0.5, arm));
+                driverController.PovUp().onTrue(multiSystemCommands.IntakeSequence(transfer, elevator, arm));
 
         }
 

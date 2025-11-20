@@ -8,7 +8,7 @@ import static frc.robot.Subsystems.Arm.ArmConstants.*;
 
 public class ArmCommands extends Command {
 
-    public Command RunArm(double voltage, Arm arm) {
+    public Command setVoltage(double voltage, Arm arm) {
         return Commands.runEnd(() -> arm.getIO().setVoltage(voltage), () -> arm.getIO().resistGravity(), arm);
     }
 
@@ -26,13 +26,16 @@ public class ArmCommands extends Command {
             arm.getIO().resistGravity();
             arm.getIO().resetPID(CLOSE_POS);
         },
-                () -> {arm.getIO().addKg(0);
-                    arm.getIO().setGoal(CLOSE_POS);},
+                () -> {
+                    arm.getIO().addKg(0);
+                    arm.getIO().setGoal(CLOSE_POS);
+                },
                 interrupted -> arm.getIO().resistGravity(),
-                () ->
-                    arm.getIO().atGoal(),
-                arm).andThen(() -> {arm.getIO().addKg(0);
-                    arm.getIO().setVoltage(-0.5);}).until(() -> arm.getIO().getPos() == 0);
+                () -> arm.getIO().atGoal(),
+                arm).andThen(() -> {
+                    arm.getIO().addKg(0);
+                    arm.getIO().setVoltage(-0.5);
+                }).until(() -> arm.getIO().getPos() == 0);
     }
 
 }
