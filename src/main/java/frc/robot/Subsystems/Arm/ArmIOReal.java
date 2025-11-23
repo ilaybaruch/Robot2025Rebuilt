@@ -48,6 +48,7 @@ public class ArmIOReal implements ArmIO {
         encoder.setPosition(0);
 
         pidController.setTolerance(TOLERANCE);
+
     }
 
     @Override
@@ -148,6 +149,11 @@ public class ArmIOReal implements ArmIO {
     @Override
     public void addKg(double KG) {
         feedforward.setKg(KG + Kg);
+    }
+
+    @Override
+    public boolean isHigh() {
+        return encoder.getPosition() > 0;
     }
 
 }

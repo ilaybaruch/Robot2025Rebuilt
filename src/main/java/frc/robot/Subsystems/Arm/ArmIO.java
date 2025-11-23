@@ -60,5 +60,10 @@ public interface ArmIO {
     public default void setPIDValues() {
     }
 
-    public default void addKg(double KG){}
+    public default void addKg(double KG) {
+    }
+
+    public default boolean isHigh() {
+        return false;
+    }
 }

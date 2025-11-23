@@ -129,7 +129,7 @@ public class RobotContainer {
                 driverController.PovDown().onTrue(multiSystemCommands.CloseAll(elevator, arm));
                 driverController.PovUp().onTrue(
                                 multiSystemCommands.L4(elevator, arm, () -> driverController.PovUp().getAsBoolean()));
-
+                driverController.y().whileTrue(multiSystemCommands.outtakeCoral(arm, transfer));
         }
 
         public void displaSimFieldToAdvantageScope() {

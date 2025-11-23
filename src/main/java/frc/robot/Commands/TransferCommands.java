@@ -3,17 +3,27 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import frc.robot.Subsystems.Transfer.Transfer;
 import static frc.robot.Subsystems.Transfer.TransferConstants.*;
 
 public class TransferCommands {
-    public Command intakeCoral(Transfer transfer){
-        return Commands.runEnd(()-> transfer.getIO().setVoltage(INTAKE_VOLTAGE), ()-> transfer.getIO().stopMotor(), transfer)
-        .until(()->transfer.getIO().isCoralIn()); // shalom
+    public Command intakeCoral(Transfer transfer) {
+        return Commands
+                .runEnd(() -> transfer.getIO().setVoltage(TRANSFER_INTAKE_VOLTAGE), () -> transfer.getIO().stopMotor(),
+                        transfer)
+                .until(() -> transfer.getIO().isCoralIn()); // shalom
     }
 
-    public Command returnCoral(Transfer transfer){
-        return Commands.runEnd(()-> transfer.getIO().setVoltage(RETURN_SPEED),()-> transfer.getIO().stopMotor(), transfer);
+    public Command returnCoral(Transfer transfer) {
+        return Commands.runEnd(() -> transfer.getIO().setVoltage(TRANSFER_RETURN_SPEED),
+                () -> transfer.getIO().stopMotor(),
+                transfer);
     }
-    
+
+    public Command outtakeCoral(Transfer transfer, double speed) {
+        return Commands.runEnd(() -> transfer.getIO().setVoltage(speed), () -> transfer.getIO().stopMotor(),
+                transfer);
+    }
+
 }
