@@ -13,7 +13,7 @@ public class ArmConstants {
     public static final double Ki = 0.0;
     public static final double Kd = 0.0;
     public static final double Ks = 0.0;
-    public static final double Kg = 0.5;
+    public static final double Kg = 0.55;
     public static final double Kv = 0.0;
     public static final double Ka = 0.0;
     public static final double MOTOR_MAX_VOLTAGE = 12;
@@ -23,14 +23,14 @@ public class ArmConstants {
     public static final double POSITION_CONVERSION_FACTOR = 1.0 / 40 /* gears */ * (2 * Math.PI)/* rads */;
     public static final boolean INVERTED = true; // need to check if true
     public static final double MAX_ACCELERATION = 8;
-    public static final double MAX_VELOCITY = 3;
+    public static final double MAX_VELOCITY = 4.5;
     public static final double TOLERANCE = Units.degreesToRadians(4);
     public static final double ARM_L1_POS = -1.24;
     public static final double ARM_L2_POS = -1.2;
     public static final double ARM_L3_POS = 1.1;
     public static final double ARM_L4_POS = 1.28;
-    public static final double OPEN_POS = Math.PI / 2.0; // 2.13
-    public static final double CLOSE_POS = Math.PI / -2;// -1.96
+    public static final double ARM_OPEN_POS = Math.PI / 2.0; // 2.13
+    public static final double ARM_CLOSE_POS = Math.PI / -2;// -1.96
     public static final double CORAL_KG = 0;
 
 }

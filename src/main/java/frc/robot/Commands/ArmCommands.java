@@ -24,11 +24,11 @@ public class ArmCommands extends Command {
     public Command ArmGoToStart(Arm arm) {
         return new FunctionalCommand(() -> {
             arm.getIO().resistGravity();
-            arm.getIO().resetPID(CLOSE_POS);
+            arm.getIO().resetPID(ARM_CLOSE_POS);
         },
                 () -> {
                     arm.getIO().addKg(0);
-                    arm.getIO().setGoal(CLOSE_POS);
+                    arm.getIO().setGoal(ARM_CLOSE_POS);
                 },
                 interrupted -> arm.getIO().resistGravity(),
                 () -> arm.getIO().atGoal(),
@@ -40,7 +40,7 @@ public class ArmCommands extends Command {
 
     public Command closeArm(Arm arm) {
         return Commands.sequence(
-                goToPositon(CLOSE_POS, arm),
+                goToPositon(ARM_CLOSE_POS, arm),
                 setVoltage(-1, arm).until(arm.getIO()::downSwitchPressed));
     }
 

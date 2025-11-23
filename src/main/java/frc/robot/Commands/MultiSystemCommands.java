@@ -10,6 +10,7 @@ import frc.robot.Subsystems.Transfer.Transfer;
 
 import static frc.robot.Subsystems.Arm.ArmConstants.ARM_L3_POS;
 import static frc.robot.Subsystems.Arm.ArmConstants.ARM_L4_POS;
+import static frc.robot.Subsystems.Arm.ArmConstants.ARM_OPEN_POS;
 import static frc.robot.Subsystems.Elevator.ElevatorConstants.*;
 
 import java.util.function.BooleanSupplier;
@@ -34,15 +35,20 @@ public class MultiSystemCommands extends SubsystemBase {
                 elevatorCommands.goToPosition(10, elevator));
     }
 
-    public Command L3(Elevator elevator, Arm arm) {
-        return Commands.parallel(
-                elevatorCommands.goToPosition(ELEVATOR_L3_POS, elevator), armCommands.goToPositon(ARM_L3_POS, arm));
-    }
-
     public Command L4(Elevator elevator, Arm arm, BooleanSupplier isButtonPressed) {
         return Commands.sequence(
-                armCommands.goToPositon(ARM_L4_POS, arm),
-                elevatorCommands.goToPosition(ELEVATOR_L4_POS, elevator).onlyIf(isButtonPressed));
+                armCommands.goToPositon(ARM_OPEN_POS, arm).alongWith(
+                        elevatorCommands.goToPosition(ELEVATOR_MAX_POS, elevator)),
+                armCommands.goToPositon(ARM_L4_POS, arm)
+                        .onlyIf(isButtonPressed));
+    }
+
+    public Command L3(Elevator elevator, Arm arm, BooleanSupplier isButtonPressed) {
+        return Commands.sequence(
+                armCommands.goToPositon(ARM_OPEN_POS, arm).alongWith(
+                        elevatorCommands.goToPosition(0, elevator)),
+                armCommands.goToPositon(ARM_L3_POS, arm)
+                        .onlyIf(isButtonPressed));
     }
 
     public Command CloseAll(Elevator elevator, Arm arm) {

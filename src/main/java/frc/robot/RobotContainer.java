@@ -119,12 +119,13 @@ public class RobotContainer {
                 // driverController.x().onTrue(elevatorCommands.goToPosition(25, elevator));
                 // driverController.b().onTrue(elevatorCommands.ElevatorDown(elevator));
                 driverController.a().onTrue(armCommands.goToPositon(0, arm));
-                driverController.x().onTrue(armCommands.goToPositon(OPEN_POS, arm));
+                driverController.x().onTrue(armCommands.goToPositon(ARM_OPEN_POS, arm));
                 driverController.b().onTrue(armCommands.ArmGoToStart(arm));
                 driverController.RB().whileTrue(armCommands.setVoltage(1, arm));
                 driverController.LB().whileTrue(armCommands.setVoltage(-0.5, arm));
                 driverController.PovLeft().onTrue(multiSystemCommands.IntakeSequence(transfer, elevator, arm));
-                driverController.PovRight().onTrue(multiSystemCommands.L3(elevator, arm));
+                driverController.PovRight().onTrue(multiSystemCommands.L3(elevator, arm,
+                                () -> driverController.PovRight().getAsBoolean()));
                 driverController.PovDown().onTrue(multiSystemCommands.CloseAll(elevator, arm));
                 driverController.PovUp().onTrue(
                                 multiSystemCommands.L4(elevator, arm, () -> driverController.PovUp().getAsBoolean()));

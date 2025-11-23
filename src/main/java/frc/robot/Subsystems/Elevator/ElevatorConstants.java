@@ -25,5 +25,5 @@ public class ElevatorConstants {
     public static final double ELEVATOR_L2_POS = 19.0;
     public static final double ELEVATOR_L3_POS = 1;
     public static final double ELEVATOR_L4_POS = 33.25;
-    public static final double ELEVATOR_MAX_POS = 0.0;
+    public static final double ELEVATOR_MAX_POS = 33.0;
 }
