@@ -130,6 +130,8 @@ public class RobotContainer {
                 driverController.PovUp().onTrue(
                                 multiSystemCommands.L4(elevator, arm, () -> driverController.PovUp().getAsBoolean()));
                 driverController.y().whileTrue(multiSystemCommands.outtakeCoral(arm, transfer));
+                driverController.start().onTrue(multiSystemCommands.AlgaeIntake(transfer, elevator, arm,
+                                () -> !driverController.start().getAsBoolean()));
         }
 
         public void displaSimFieldToAdvantageScope() {

@@ -21,8 +21,8 @@ public class TransferCommands {
                 transfer);
     }
 
-    public Command outtakeCoral(Transfer transfer, double speed) {
-        return Commands.runEnd(() -> transfer.getIO().setVoltage(speed), () -> transfer.getIO().stopMotor(),
+    public Command outtakeCoral(Transfer transfer, double voltage) {
+        return Commands.runEnd(() -> transfer.getIO().setVoltage(voltage), () -> transfer.getIO().stopMotor(),
                 transfer);
     }
 
