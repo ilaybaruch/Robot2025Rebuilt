@@ -12,7 +12,7 @@ public class ArmCommands extends Command {
         return Commands.runEnd(() -> arm.getIO().setVoltage(voltage), () -> arm.getIO().resistGravity(), arm);
     }
 
-    public Command ArmGoToPoistion(double goal, Arm arm) {
+    public Command goToPositon(double goal, Arm arm) {
         return new FunctionalCommand(() -> {
             arm.getIO().resistGravity();
             arm.getIO().resetPID(goal);
@@ -36,6 +36,12 @@ public class ArmCommands extends Command {
                     arm.getIO().addKg(0);
                     arm.getIO().setVoltage(-0.5);
                 }).until(() -> arm.getIO().getPos() == 0);
+    }
+
+    public Command closeArm(Arm arm) {
+        return Commands.sequence(
+                goToPositon(CLOSE_POS, arm),
+                setVoltage(-1, arm).until(arm.getIO()::downSwitchPressed));
     }
 
 }

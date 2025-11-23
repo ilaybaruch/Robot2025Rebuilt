@@ -10,7 +10,7 @@ import frc.robot.Subsystems.Elevator.Elevator;
 
 public class ElevatorCommands extends Command {
 
-    public Command RunElevator(DoubleSupplier voltage, Elevator elevator) {
+    public Command setVoltage(DoubleSupplier voltage, Elevator elevator) {
         return Commands.runEnd(() -> elevator.getIO().setVolatge(voltage.getAsDouble()),
                 () -> elevator.getIO().stopElevator(), elevator).withName("elevator normal voltage");
     }
@@ -39,6 +39,12 @@ public class ElevatorCommands extends Command {
                 () -> elevator.getIO().atGoal(),
                 elevator).withName("elevator down").andThen(() -> elevator.getIO().setSpeed(-0.1))
                 .until(() -> elevator.getIO().atGoal());
+    }
+
+    public Command closeElevator(Elevator elevator) {
+        return Commands.sequence(
+                goToPosition(0, elevator),
+                setVoltage(() -> -1, elevator).until(elevator.getIO()::isPressed));
     }
 
 }

@@ -25,10 +25,10 @@ public class ArmConstants {
     public static final double MAX_ACCELERATION = 8;
     public static final double MAX_VELOCITY = 3;
     public static final double TOLERANCE = Units.degreesToRadians(4);
-    public static final double L1_POS = 0;
-    public static final double L2_POS = 0;
-    public static final double L3_POS = 0;
-    public static final double L4_POS = 0;
+    public static final double ARM_L1_POS = -1.24;
+    public static final double ARM_L2_POS = -1.2;
+    public static final double ARM_L3_POS = 1.1;
+    public static final double ARM_L4_POS = 1.28;
     public static final double OPEN_POS = Math.PI / 2.0; // 2.13
     public static final double CLOSE_POS = Math.PI / -2;// -1.96
     public static final double CORAL_KG = 0;
