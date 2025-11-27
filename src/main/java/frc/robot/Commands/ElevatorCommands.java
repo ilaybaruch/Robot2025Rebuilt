@@ -1,7 +1,6 @@
 package frc.robot.Commands;
 
 import java.util.function.DoubleSupplier;
-import java.util.zip.Deflater;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;

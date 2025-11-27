@@ -3,18 +3,14 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Subsystems.Arm.Arm;
-import frc.robot.Subsystems.Arm.ArmIOReal;
 import frc.robot.Subsystems.Elevator.Elevator;
 import frc.robot.Subsystems.Transfer.Transfer;
 
-import static frc.robot.Subsystems.Arm.ArmConstants.ARM_L3_POS;
-import static frc.robot.Subsystems.Arm.ArmConstants.ARM_L4_POS;
-import static frc.robot.Subsystems.Arm.ArmConstants.ARM_OPEN_POS;
+import static frc.robot.Subsystems.Arm.ArmConstants.*;
 import static frc.robot.Subsystems.Elevator.ElevatorConstants.*;
-import static frc.robot.Subsystems.Transfer.TransferConstants.TRANSFER_OUTTAKE_SPEED;
+import static frc.robot.Subsystems.Transfer.TransferConstants.*;
 
 import java.util.function.BooleanSupplier;
 
