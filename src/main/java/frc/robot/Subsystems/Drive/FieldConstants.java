@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Drive;
+package frc.robot.Subsystems.Drive;
 
 // Copyright (c) 2025 FRC 6328
 // http://github.com/Mechanical-Advantage
