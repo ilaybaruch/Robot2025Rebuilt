@@ -48,13 +48,7 @@ public class ModuleIOPOM implements ModuleIO {
     // private final Queue<Double> drivePositionQueue;
     // private final Queue<Double> turnPositionQueue; need to work on odometry
 
-    // Connection debouncers
-    private final Debouncer driveConnectedDebounce = new Debouncer(0.5);
-    private final Debouncer turnConnectedDebounce = new Debouncer(0.5);
-
     private final VelocityVoltage velocityVoltageRequest = new VelocityVoltage(0.0);
-
-    private final Timer resetToAbsoluteTimer = new Timer();
 
     public ModuleIOPOM(int module) {
         this.module = module;
