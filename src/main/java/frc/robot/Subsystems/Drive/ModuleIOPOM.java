@@ -172,4 +172,8 @@ public class ModuleIOPOM implements ModuleIO {
         }
     }
 
+    public double getAbsolutePosition() {
+        return turnEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI;
+    }
+
 }
