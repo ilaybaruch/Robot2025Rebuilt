@@ -40,6 +40,7 @@ public class Module {
         } else {
             io.setDriveVelocity(state.speedMetersPerSecond / wheelRadiusMeters);
         }
+        io.setTurnPosition(state.angle);
     }
 
     public void runCharacterization(double output) {
