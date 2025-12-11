@@ -16,16 +16,15 @@ import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 public class GyroIOPigeon implements GyroIO {
 
     private final WPI_PigeonIMU pigeon = new WPI_PigeonIMU(pigeonCanId);
-    // private final Queue<Double> yawPositionQueue;
-    // private final Queue<Double> yawTimestampQueue;
+    private final Queue<Double> yawPositionQueue;
+    private final Queue<Double> yawTimestampQueue;
     private Rotation2d offset = new Rotation2d();
 
     public GyroIOPigeon() {
         pigeon.reset();
 
-        // yawTimestampQueue = OdometryThread.getInstance().makeTimestampQueue();
-        // yawPositionQueue =
-        // OdometryThread.getInstance().registerSignal(pigeon::getYaw);
+        yawTimestampQueue = OdometryThread.getInstance().makeTimestampQueue();
+        yawPositionQueue = OdometryThread.getInstance().registerSignal(pigeon::getYaw);
     }
 
     @Override
@@ -34,11 +33,10 @@ public class GyroIOPigeon implements GyroIO {
         inputs.yawPosition = Rotation2d.fromDegrees(pigeon.getYaw()).minus(offset);
         inputs.yawVelocityRadPerSec = Units.degreesToRadians(pigeon.getRate());
 
-        // inputs.odometryYawTimestamps = yawTimestampQueue.stream().mapToDouble((Double
-        // value) -> value).toArray();
-        // inputs.odometryYawPositions = yawPositionQueue.stream()
-        // .map((Double value) -> Rotation2d.fromDegrees(value))
-        // .toArray(Rotation2d[]::new);
+        inputs.odometryYawTimestamps = yawTimestampQueue.stream().mapToDouble((Double value) -> value).toArray();
+        inputs.odometryYawPositions = yawPositionQueue.stream()
+                .map((Double value) -> Rotation2d.fromDegrees(value))
+                .toArray(Rotation2d[]::new);
     }
 
     @Override

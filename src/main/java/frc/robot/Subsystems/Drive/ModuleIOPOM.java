@@ -2,6 +2,7 @@ package frc.robot.Subsystems.Drive;
 
 import java.util.Queue;
 
+import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -50,9 +51,13 @@ public class ModuleIOPOM implements ModuleIO {
     private final TalonFXConfiguration driveConfig;
 
     // // Queue inputs from odometry thread
-    // private final Queue<Double> timestampQueue;
-    // private final Queue<Double> drivePositionQueue;
-    // private final Queue<Double> turnPositionQueue; need to work on odometry
+    private final Queue<Double> timestampQueue;
+    private final Queue<Double> drivePositionQueue;
+    private final Queue<Double> turnPositionQueue;
+
+    // Connection debouncers
+    private final Debouncer driveConnectedDebounce = new Debouncer(0.5);
+    private final Debouncer turnConnectedDebounce = new Debouncer(0.5);
 
     private final VelocityVoltage velocityVoltageRequest = new VelocityVoltage(0.0);
 
@@ -132,14 +137,36 @@ public class ModuleIOPOM implements ModuleIO {
                 .busVoltagePeriodMs(20)
                 .outputCurrentPeriodMs(20);
 
-        // // Create odometry queues
-        // timestampQueue = OdometryThread.getInstance().makeTimestampQueue();
-        // drivePositionQueue = OdometryThread.getInstance()
-        // .registerSignal(() ->
-        // Units.rotationsToRadians(driveMotor.getPosition().getValueAsDouble()));
-        // turnPositionQueue = OdometryThread.getInstance().registerSignal(turnMotor,
-        // turnMotor.getEncoder()::getPosition); need to work on odometry
+        // Create odometry queues
+        timestampQueue = OdometryThread.getInstance().makeTimestampQueue();
+        drivePositionQueue = OdometryThread.getInstance()
+                .registerSignal(() -> Units.rotationsToRadians(driveMotor.getPosition().getValueAsDouble()));
+        turnPositionQueue = OdometryThread.getInstance().registerSignal(turnMotor,
+                turnMotor.getEncoder()::getPosition);
+    }
 
+    @Override
+    public void updateInputs(ModuleIOInputs inputs) {
+        var driveStatus = BaseStatusSignal.refreshAll(
+                driveMotor.getPosition(),
+                driveMotor.getVelocity(),
+                driveMotor.getMotorVoltage(),
+                driveMotor.getStatorCurrent());
+        inputs.driveConnected = driveConnectedDebounce.calculate(driveStatus.isOK());
+        inputs.drivePositionRad = Units.rotationsToRadians(driveMotor.getPosition().getValueAsDouble());
+        inputs.driveVelocityRadPerSec = Units.rotationsToRadians(driveMotor.getVelocity().getValueAsDouble());
+        inputs.driveAppliedVolts = driveMotor.getMotorVoltage().getValueAsDouble();
+        inputs.driveCurrentAmps = driveMotor.getStatorCurrent().getValueAsDouble();
+
+        // Update odometry inputs
+        inputs.odometryTimestamps = timestampQueue.stream().mapToDouble((Double value) -> value).toArray();
+        inputs.odometryDrivePositionsRad = drivePositionQueue.stream().mapToDouble((Double value) -> value).toArray();
+        inputs.odometryTurnPositions = turnPositionQueue.stream()
+                .map((Double value) -> new Rotation2d(value))
+                .toArray(Rotation2d[]::new);
+        timestampQueue.clear();
+        drivePositionQueue.clear();
+        turnPositionQueue.clear();
     }
 
     @Override

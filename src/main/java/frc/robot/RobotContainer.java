@@ -13,11 +13,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Commands.DriveCommands;
 import frc.robot.POM_lib.Joysticks.PomXboxController;
+import frc.robot.Subsystems.Drive.Drive;
+import frc.robot.Subsystems.Drive.GyroIOPigeon;
+import frc.robot.Subsystems.Drive.ModuleIOPOM;
 
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
@@ -35,6 +40,9 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
 
+        Drive drive;
+        DriveCommands driveCommands;
+
         // Controller
         private final PomXboxController driverController = new PomXboxController(0);
 
@@ -50,6 +58,13 @@ public class RobotContainer {
                 switch (Constants.currentMode) {
                         case REAL:
                                 // Real robot, instantiate hardware IO implementations
+                                drive = new Drive(
+                                                new GyroIOPigeon(),
+                                                new ModuleIOPOM(0),
+                                                new ModuleIOPOM(1),
+                                                new ModuleIOPOM(2),
+                                                new ModuleIOPOM(3));
+                                driveCommands = new DriveCommands();
 
                                 break;
 
@@ -82,7 +97,12 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
+                drive.setDefaultCommand(driveCommands.joystickDrive(drive, () -> driverController.getLeftY() * 0.2,
+                                () -> driverController.getLeftX() * 0.2, () -> driverController.getRightX()));
 
+                driverController.x().onTrue(driveCommands.driveTune(drive));
+                driverController.a().whileTrue(driveCommands.setAngle(new Rotation2d(Math.PI), drive));
+                driverController.b().whileTrue(driveCommands.setAngle(new Rotation2d(Math.PI * 2), drive));
         }
 
         public void displaSimFieldToAdvantageScope() {

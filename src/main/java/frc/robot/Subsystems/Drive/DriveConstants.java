@@ -21,6 +21,7 @@ public class DriveConstants {
         public static final double MAX_ACCELERATION_OMEGA = 2;
         public static final double MAX_VELOCETY_OMEGA = 1.8;
         public static final double OMEGA_TOLERANCE = 0.05;
+        public static final double DEADBAND = 0.1;
 
         public static final double ALGAE_OUTTAKE_DRIVE_BACK_SPEED = 0.04;
 

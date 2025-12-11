@@ -90,12 +90,12 @@ public class Module {
         return new SwerveModuleState(getVelocityMetersPerSec(), getAngle());
     }
 
-    // public SwerveModulePosition[] getOdometryPositions() {
-    // return odometryPositions;
-    // }
+    public SwerveModulePosition[] getOdometryPositions() {
+        return odometryPositions;
+    }
 
-    // public double[] getOdometryTimestamps() {
-    // return inputs.odometryTimestamps;
-    // }
+    public double[] getOdometryTimestamps() {
+        return inputs.odometryTimestamps;
+    }
 
 }
