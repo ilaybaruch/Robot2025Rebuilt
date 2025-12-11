@@ -110,9 +110,10 @@ public class DriveConstants {
         public static final double turnEncoderVelocityFactor = turnEncoderPositionFactor / 60.0; // RPM -> Rad/Sec
 
         // Turn PID configuration
-        public static final double turnKp = 0.29;
-        public static final double turnKd = 0.0744;
-        public static final double turnKs = 0.22;
+        public static final double turnKp = 0.0;
+        public static final double turnKd = 0.0;
+        public static final double turnKs = 0.0;
+        public static final double turnFF = 0.0;
         // public static final double turnKp = 0.275;
         // public static final double turnKd = 0.0744;
         public static final double turnSimP = 8.0;

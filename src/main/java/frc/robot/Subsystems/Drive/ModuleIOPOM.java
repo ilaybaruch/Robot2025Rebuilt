@@ -15,6 +15,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkClosedLoopController.ArbFFUnits;
 import com.revrobotics.spark.SparkMax;
@@ -26,7 +27,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Timer;
 
 import static frc.robot.Subsystems.Drive.DriveConstants.*;
 // import static frc.robot.Subsystems.Drive.OdometryThread.*;
@@ -42,6 +42,12 @@ public class ModuleIOPOM implements ModuleIO {
 
     // closed loop controller
     private final SparkClosedLoopController turnController;
+    private final Slot0Configs driveMotorGains;
+
+    private final DrivePIDTuning drivePIDTuning;
+
+    private final SparkMaxConfig turnConfig;
+    private final TalonFXConfiguration driveConfig;
 
     // // Queue inputs from odometry thread
     // private final Queue<Double> timestampQueue;
@@ -67,6 +73,8 @@ public class ModuleIOPOM implements ModuleIO {
 
         turnEncoder = new CANcoder(swerveBaseID + 2 + swerveModuleIDsCount * module);
 
+        drivePIDTuning = new DrivePIDTuning();
+
         // turn encouder config
         var encoderConfig = new CANcoderConfiguration();
         encoderConfig.MagnetSensor.SensorDirection = module == 1 ? SensorDirectionValue.CounterClockwise_Positive
@@ -76,12 +84,12 @@ public class ModuleIOPOM implements ModuleIO {
         turnController = turnMotor.getClosedLoopController();
 
         // drive motor config
-        var driveConfig = new TalonFXConfiguration();
+        driveConfig = new TalonFXConfiguration();
         driveConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        // Slot0Configs driveMotorGains = new Slot0Configs()
-        // .withKP(driveKp).withKD(driveKd).withKS(driveKs).withKV(driveKv); need to add
+        driveMotorGains = new Slot0Configs()
+                .withKP(driveKp).withKD(driveKd).withKS(driveKs).withKV(driveKv);
         // closed loop function
-        // driveConfig.Slot0 = driveMotorGains;
+        driveConfig.Slot0 = driveMotorGains;
 
         driveConfig.Feedback.SensorToMechanismRatio = driveEncoderPositionFactor;
         driveConfig.Feedback.RotorToSensorRatio = 1.0;
@@ -95,7 +103,7 @@ public class ModuleIOPOM implements ModuleIO {
         driveConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = driveRampRate;
 
         // Configure turn motor
-        var turnConfig = new SparkMaxConfig();
+        turnConfig = new SparkMaxConfig();
         turnConfig
                 .inverted(turnInverted)
                 .idleMode(IdleMode.kCoast)
@@ -166,8 +174,21 @@ public class ModuleIOPOM implements ModuleIO {
         }
     }
 
+    @Override
     public double getAbsolutePosition() {
         return turnEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI;
     }
 
+    @Override
+    public void setPIDValues() {
+        turnConfig.closedLoop.pidf(drivePIDTuning.getTurnKp(), 0, drivePIDTuning.getTurnKd(),
+                drivePIDTuning.getTurnFF(),
+                ClosedLoopSlot.kSlot1);
+        turnMotor.configure(turnConfig, com.revrobotics.spark.SparkBase.ResetMode.kNoResetSafeParameters,
+                PersistMode.kNoPersistParameters);
+
+        driveMotorGains.withKP(drivePIDTuning.getDriveKp()).withKD(drivePIDTuning.getDriveKd())
+                .withKS(drivePIDTuning.getDriveKs()).withKV(drivePIDTuning.getDriveKv());
+        driveConfig.Slot0 = driveMotorGains;
+    }
 }

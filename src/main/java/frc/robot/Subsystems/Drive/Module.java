@@ -58,6 +58,18 @@ public class Module {
         io.setTurnOpenLoop(0.0);
     }
 
+    public void driveTune() {
+        io.setPIDValues();
+    }
+
+    public void setAngle(Rotation2d angle) {
+        io.setTurnPosition(angle);
+    }
+
+    public void setVelocity(double velocityRadPerSec) {
+        io.setDriveVelocity(velocityRadPerSec);
+    }
+
     public Rotation2d getAngle() {
         return inputs.turnPosition;
     }
