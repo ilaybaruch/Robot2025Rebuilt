@@ -6,6 +6,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -44,7 +45,7 @@ public class Drive extends SubsystemBase {
                     new SwerveModulePosition()
             };
     private SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(kinematics, rawGyroRotation,
-            lastModulePositions, new Pose2d(10, 7.5, new Rotation2d(-1)));
+            lastModulePositions, new Pose2d(0, 0, new Rotation2d(-1)));
     private Field2d field2d = new Field2d();
 
     public Drive(GyroIO gyroIO,
@@ -57,7 +58,11 @@ public class Drive extends SubsystemBase {
         modules[1] = new Module(frModuleIO, 1);
         modules[2] = new Module(blModuleIO, 2);
         modules[3] = new Module(brModuleIO, 3);
+
         SmartDashboard.putData("filed", field2d);
+
+        // Start odometry thread
+        OdometryThread.getInstance().start();
     }
 
     @Override
@@ -70,7 +75,6 @@ public class Drive extends SubsystemBase {
         }
         odometryLock.unlock();
 
-        // need to add odometry stuff
         // Update odometry
         double[] sampleTimestamps = modules[0].getOdometryTimestamps(); // All signals are sampled together
         int sampleCount = sampleTimestamps.length;
@@ -101,8 +105,9 @@ public class Drive extends SubsystemBase {
             // Apply update
             poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
 
-            field2d.setRobotPose(getPose());
         }
+
+        field2d.setRobotPose(getPose());
 
     }
 
@@ -134,6 +139,25 @@ public class Drive extends SubsystemBase {
 
         }
 
+    }
+
+    @AutoLogOutput(key = "SwerveStates/Measured")
+    private SwerveModuleState[] getModuleStates() {
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        for (int i = 0; i < 4; i++) {
+            states[i] = modules[i].getState();
+        }
+        return states;
+    }
+
+    @AutoLogOutput(key = "SwerveChassisSpeeds/Measured")
+    public ChassisSpeeds getChassisSpeeds() {
+        return kinematics.toChassisSpeeds(getModuleStates());
+    }
+
+    @AutoLogOutput(key = "Odometry/Robot")
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
     }
 
     public void setAngle(Rotation2d angle) {
@@ -181,10 +205,6 @@ public class Drive extends SubsystemBase {
 
     public double getMaxAngularSpeedRadPerSec() {
         return maxSpeedRadiansPerSec;
-    }
-
-    public Pose2d getPose() {
-        return poseEstimator.getEstimatedPosition();
     }
 
     /** Returns the current odometry rotation. */

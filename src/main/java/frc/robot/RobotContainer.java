@@ -66,6 +66,7 @@ public class RobotContainer {
                                                 new ModuleIOPOM(3));
                                 driveCommands = new DriveCommands();
 
+                                drive.resetGyro();
                                 break;
 
                         case SIM:

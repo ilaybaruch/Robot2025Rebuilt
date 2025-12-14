@@ -98,6 +98,7 @@ public class ModuleIOPOM implements ModuleIO {
                 // drive motor config
                 driveConfig = new TalonFXConfiguration();
                 driveConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+                driveConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                 driveMotorGains = new Slot0Configs()
                                 .withKP(driveKp).withKI(driveKi).withKS(driveKs).withKV(driveKv);
                 // closed loop function
@@ -112,6 +113,8 @@ public class ModuleIOPOM implements ModuleIO {
                 driveConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = driveRampRate;
                 driveConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = driveRampRate;
                 driveConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = driveRampRate;
+
+                driveMotor.getConfigurator().apply(driveConfig);
 
                 // Configure turn motor
                 turnConfig = new SparkMaxConfig();
@@ -213,7 +216,7 @@ public class ModuleIOPOM implements ModuleIO {
         @Override
         public void setDriveVelocity(double velocityRadPerSec) {
                 double velocityRotPerSec = Units.radiansToRotations(velocityRadPerSec);
-                driveMotor.setControl(velocityVoltageRequest.withVelocity(-velocityRotPerSec));
+                driveMotor.setControl(velocityVoltageRequest.withVelocity(velocityRotPerSec));
         }
 
         @Override
