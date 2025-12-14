@@ -35,72 +35,72 @@ import java.util.function.Supplier;
 import static frc.robot.Subsystems.Drive.DriveConstants.*;
 
 public class DriveCommands {
-    {
-    }
+        {
+        }
 
-    private Translation2d getLinearVelocityFromJoysticks(double x, double y) {
-        // Apply deadband
-        double linearMagnitude = MathUtil.applyDeadband(Math.hypot(x, y), DEADBAND);
-        Rotation2d linearDirection = new Rotation2d(Math.atan2(y, x));
+        private Translation2d getLinearVelocityFromJoysticks(double x, double y) {
+                // Apply deadband
+                double linearMagnitude = MathUtil.applyDeadband(Math.hypot(x, y), DEADBAND);
+                Rotation2d linearDirection = new Rotation2d(Math.atan2(y, x));
 
-        // Square magnitude for more precise control
-        linearMagnitude = linearMagnitude * linearMagnitude;
+                // Square magnitude for more precise control
+                linearMagnitude = linearMagnitude * linearMagnitude;
 
-        // Return new linear velocity
-        return new Pose2d(new Translation2d(), linearDirection)
-                .transformBy(new Transform2d(linearMagnitude, 0.0, new Rotation2d()))
-                .getTranslation();
-    }
+                // Return new linear velocity
+                return new Pose2d(new Translation2d(), linearDirection)
+                                .transformBy(new Transform2d(linearMagnitude, 0.0, new Rotation2d()))
+                                .getTranslation();
+        }
 
-    public Command driveTune(Drive drive) {
-        return Commands.runOnce(() -> drive.setPIDValues(), drive);
-    }
+        public Command driveTune(Drive drive) {
+                return Commands.runOnce(() -> drive.setPIDValues(), drive);
+        }
 
-    public Command setAngle(Rotation2d angle, Drive drive) {
-        return Commands.run(() -> drive.setAngle(angle), drive);
-    }
+        public Command setAngle(Rotation2d angle, Drive drive) {
+                return Commands.run(() -> drive.setAngle(angle), drive);
+        }
 
-    // public static Command resetPigeon(Drive drive) {
-    // return Commands.runOnce(() -> drive.resetGyro(), drive);
-    // }
+        // public static Command resetPigeon(Drive drive) {
+        // return Commands.runOnce(() -> drive.resetGyro(), drive);
+        // }
 
-    /**
-     * Field relative drive command using two joysticks (controlling linear and
-     * angular velocities).
-     */
-    public Command joystickDrive(
-            Drive drive,
-            DoubleSupplier xSupplier,
-            DoubleSupplier ySupplier,
-            DoubleSupplier omegaSupplier) {
-        return Commands.run(
-                () -> {
-                    // Get linear velocity
-                    Translation2d linearVelocity = getLinearVelocityFromJoysticks(
-                            xSupplier.getAsDouble(),
-                            ySupplier.getAsDouble());
+        /**
+         * Field relative drive command using two joysticks (controlling linear and
+         * angular velocities).
+         */
+        public Command joystickDrive(
+                        Drive drive,
+                        DoubleSupplier xSupplier,
+                        DoubleSupplier ySupplier,
+                        DoubleSupplier omegaSupplier) {
+                return Commands.run(
+                                () -> {
+                                        // Get linear velocity
+                                        Translation2d linearVelocity = getLinearVelocityFromJoysticks(
+                                                        xSupplier.getAsDouble(),
+                                                        ySupplier.getAsDouble());
 
-                    // Apply rotation deadband
-                    double omega = MathUtil.applyDeadband(omegaSupplier.getAsDouble(), DEADBAND);
+                                        // Apply rotation deadband
+                                        double omega = MathUtil.applyDeadband(omegaSupplier.getAsDouble(), DEADBAND);
 
-                    // Square rotation value for more precise control
-                    omega = Math.copySign(omega * omega, omega);
+                                        // Square rotation value for more precise control
+                                        omega = Math.copySign(omega * omega, omega);
 
-                    // Convert to field relative speeds & send command
-                    ChassisSpeeds speeds = new ChassisSpeeds(
-                            linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
-                            linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
-                            omega * drive.getMaxAngularSpeedRadPerSec());
-                    boolean isFlipped = DriverStation.getAlliance().isPresent()
-                            && DriverStation.getAlliance().get() == Alliance.Red;
-                    drive.runVelocity(speeds, true);
-                    ChassisSpeeds.fromFieldRelativeSpeeds(
-                            speeds,
-                            isFlipped
-                                    ? drive.getRotation().plus(
-                                            new Rotation2d(Math.PI))
-                                    : drive.getRotation());
-                },
-                drive);
-    }
+                                        // Convert to field relative speeds & send command
+                                        ChassisSpeeds speeds = new ChassisSpeeds(
+                                                        linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
+                                                        linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
+                                                        omega * drive.getMaxAngularSpeedRadPerSec());
+                                        boolean isFlipped = DriverStation.getAlliance().isPresent()
+                                                        && DriverStation.getAlliance().get() == Alliance.Red;
+                                        drive.runVelocity(speeds, false);
+                                        ChassisSpeeds.fromFieldRelativeSpeeds(
+                                                        speeds,
+                                                        isFlipped
+                                                                        ? drive.getRotation().plus(
+                                                                                        new Rotation2d(Math.PI))
+                                                                        : drive.getRotation());
+                                },
+                                drive);
+        }
 }

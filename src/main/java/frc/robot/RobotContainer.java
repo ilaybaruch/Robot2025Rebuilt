@@ -97,12 +97,15 @@ public class RobotContainer {
          * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
          */
         private void configureButtonBindings() {
-                drive.setDefaultCommand(driveCommands.joystickDrive(drive, () -> driverController.getLeftY() * 0.2,
-                                () -> driverController.getLeftX() * 0.2, () -> driverController.getRightX()));
+                drive.setDefaultCommand(driveCommands.joystickDrive(drive, () -> driverController.getLeftY() * 0.4,
+                                () -> driverController.getLeftX() * 0.4, () -> driverController.getRightX() * 0.43));
+
+                driverController.PovUp().whileTrue(driveCommands.joystickDrive(drive, () -> 0, () -> 0.4, () -> 0));
 
                 driverController.x().onTrue(driveCommands.driveTune(drive));
-                driverController.a().whileTrue(driveCommands.setAngle(new Rotation2d(Math.PI), drive));
-                driverController.b().whileTrue(driveCommands.setAngle(new Rotation2d(Math.PI * 2), drive));
+                driverController.a().whileTrue(driveCommands.setAngle(new Rotation2d(1.5), drive));
+                driverController.b().whileTrue(driveCommands.setAngle(new Rotation2d(0), drive));
+
         }
 
         public void displaSimFieldToAdvantageScope() {

@@ -8,24 +8,24 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 
 public class DriveConstants {
-        public static final double KP_XY = 1.7;
+        public static final double KP_XY = 0;
         public static final double KI_XY = 0;
         public static final double KD_XY = 0;
-        public static final double MAX_ACCELERATION_XY = 4;
-        public static final double MAX_VELOCETY_XY = 4;
+        public static final double MAX_ACCELERATION_XY = 1;
+        public static final double MAX_VELOCETY_XY = 1;
         public static final double TRANSLATION_TOLERANCE = 0.03;
 
-        public static final double KP_OMEGA = 2;
+        public static final double KP_OMEGA = 0;
         public static final double KI_OMEGA = 0;
         public static final double KD_OMEGA = 0;
-        public static final double MAX_ACCELERATION_OMEGA = 2;
-        public static final double MAX_VELOCETY_OMEGA = 1.8;
-        public static final double OMEGA_TOLERANCE = 0.05;
+        public static final double MAX_ACCELERATION_OMEGA = 0;
+        public static final double MAX_VELOCETY_OMEGA = 0;
+        public static final double OMEGA_TOLERANCE = 0.03;
         public static final double DEADBAND = 0.1;
 
         public static final double ALGAE_OUTTAKE_DRIVE_BACK_SPEED = 0.04;
 
-        public static final double maxSpeedMetersPerSec = 6;
+        public static final double maxSpeedMetersPerSec = 4.0;
         public static final double maxAccMetersPerSecSquared = 4;
         public static final double maxSpeedRadiansPerSec = 4;
         public static final double maxAccRadiansPerSecSquared = 4;
@@ -41,11 +41,10 @@ public class DriveConstants {
         };
 
         // Zeroed rotation values for each module, see setup instructions
-        public static final Rotation2d frontLeftZeroRotation = new Rotation2d(0.9215 + Math.PI);
-        public static final Rotation2d frontRightZeroRotation = new Rotation2d(
-                        0.39 + 3.063 + 2.586 + 2.003);// 0.39
-        public static final Rotation2d backLeftZeroRotation = new Rotation2d(1.54 - 0.035 + Math.PI);
-        public static final Rotation2d backRightZeroRotation = new Rotation2d(3.05 - 0.05 + 1.015 + Math.PI + 0.218);
+        public static final Rotation2d frontLeftZeroRotation = new Rotation2d(-1.62);
+        public static final Rotation2d frontRightZeroRotation = new Rotation2d(2.94);
+        public static final Rotation2d backLeftZeroRotation = new Rotation2d(1.85);
+        public static final Rotation2d backRightZeroRotation = new Rotation2d(1.75);
 
         // Device CAN IDs
         public static final int pigeonCanId = 2;
@@ -85,10 +84,10 @@ public class DriveConstants {
                                                                                                             // Rad/Sec
 
         // Drive PID configuration
-        public static final double driveKp = 0.15;
-        public static final double driveKd = 0.0;
-        public static final double driveKs = 0.25;
-        public static final double driveKv = 0.7;
+        public static final double driveKp = 1.65;
+        public static final double driveKi = 0.01;
+        public static final double driveKs = 0.14;
+        public static final double driveKv = 0.1;
         public static final double driveSimP = 0.05;
         public static final double driveSimD = 0.0;
         public static final double driveSimKs = 0.0;
@@ -111,9 +110,9 @@ public class DriveConstants {
         public static final double turnEncoderVelocityFactor = turnEncoderPositionFactor / 60.0; // RPM -> Rad/Sec
 
         // Turn PID configuration
-        public static final double turnKp = 0.0;
-        public static final double turnKd = 0.0;
-        public static final double turnKs = 0.0;
+        public static final double turnKp = 0.25;
+        public static final double turnKd = 0;
+        public static final double turnKs = 0;
         public static final double turnFF = 0.0;
         // public static final double turnKp = 0.275;
         // public static final double turnKd = 0.0744;

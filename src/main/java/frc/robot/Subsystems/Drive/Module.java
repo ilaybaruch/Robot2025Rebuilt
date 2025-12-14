@@ -6,21 +6,23 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import static frc.robot.Subsystems.Drive.DriveConstants.*;
 
+import org.littletonrobotics.junction.Logger;
+
 public class Module {
     private final ModuleIO io;
     private final ModuleIOInputsAutoLogged inputs = new ModuleIOInputsAutoLogged();
-    // private final int index;
+    private final int index;
 
     private SwerveModulePosition[] odometryPositions = new SwerveModulePosition[] {};
 
-    Module(ModuleIO io/* , int index */) {
+    Module(ModuleIO io, int index) {
         this.io = io;
-        // this.index = index;
+        this.index = index;
     }
 
     public void periodic() {
         io.updateInputs(inputs);
-
+        Logger.processInputs("module" + index, inputs);
         int sampleCount = inputs.odometryTimestamps.length;
         odometryPositions = new SwerveModulePosition[sampleCount];
         for (int i = 0; i < sampleCount; i++) {
@@ -38,7 +40,7 @@ public class Module {
         if (isOpenLoop) {
             io.setDriveOpenLoop(state.speedMetersPerSecond / maxSpeedMetersPerSec * 12);
         } else {
-            io.setDriveVelocity(state.speedMetersPerSecond / wheelRadiusMeters);
+            io.setDriveVelocity(state.speedMetersPerSecond / wheelRadiusMeters * 12);
         }
         io.setTurnPosition(state.angle);
     }

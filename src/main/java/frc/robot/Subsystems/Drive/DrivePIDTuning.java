@@ -12,7 +12,7 @@ public class DrivePIDTuning {
     LoggedNetworkNumber turnFFTune = new LoggedNetworkNumber("turn KS", turnFF);
     // set drive Logged Network Number
     LoggedNetworkNumber driveKpTune = new LoggedNetworkNumber("drive KP", driveKp);
-    LoggedNetworkNumber driveKdTune = new LoggedNetworkNumber("drive KD", driveKd);
+    LoggedNetworkNumber driveKiTune = new LoggedNetworkNumber("drive KI", driveKi);
     LoggedNetworkNumber driveKsTune = new LoggedNetworkNumber("drive KS", driveKs);
     LoggedNetworkNumber driveKvTune = new LoggedNetworkNumber("drive KV", driveKv);
 
@@ -38,8 +38,8 @@ public class DrivePIDTuning {
         return driveKpTune.get();
     }
 
-    public double getDriveKd() {
-        return driveKdTune.get();
+    public double getDriveKi() {
+        return driveKiTune.get();
     }
 
     public double getDriveKs() {
