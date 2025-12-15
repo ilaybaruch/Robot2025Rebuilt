@@ -95,7 +95,7 @@ public class Drive extends SubsystemBase {
             // Update gyro angle
             if (gyroInputs.connected) {
                 // Use the real gyro angle
-                rawGyroRotation = gyroInputs.odometryYawPositions[i];
+                rawGyroRotation = new Rotation2d(gyroInputs.gyroYawPos * Math.PI / 180);
             } else {
                 // Use the angle delta from the kinematics and module deltas
                 Twist2d twist = kinematics.toTwist2d(moduleDeltas);
@@ -197,6 +197,14 @@ public class Drive extends SubsystemBase {
         for (int i = 0; i < 4; i++) {
             modules[i].driveTune();
         }
+    }
+
+    public void resetKinematics() {
+        Rotation2d[] rotations = new Rotation2d[4];
+        for (int i = 0; i < rotations.length; i++) {
+            rotations[i] = modules[i].getAngle();
+        }
+        kinematics.resetHeadings(rotations);
     }
 
     public double getMaxLinearSpeedMetersPerSec() {

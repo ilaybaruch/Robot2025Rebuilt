@@ -37,6 +37,7 @@ public class GyroIOPigeon implements GyroIO {
         inputs.odometryYawPositions = yawPositionQueue.stream()
                 .map((Double value) -> Rotation2d.fromDegrees(value))
                 .toArray(Rotation2d[]::new);
+        inputs.gyroYawPos = pigeon.getYaw();
     }
 
     @Override
